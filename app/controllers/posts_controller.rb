@@ -1,17 +1,9 @@
 class PostsController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :create, :edit, :update, :destroy]
 
-  def index
-    @groups = Group.all
-  end 
-  def show
-    @group = Group.find(params[:group_id])
-    @post = Post.find(params[:group_id])
-  end
-
   def edit
     @group = Group.find(params[:group_id])
-    @post = Post.find(params[:group_id])
+    @post = Post.find(params[:id])
   end
 
   def new
@@ -29,6 +21,17 @@ class PostsController < ApplicationController
       redirect_to group_path(@group)
     else
       render :new
+    end
+  end
+
+  def update
+    @group = Group.find(params[:group_id])
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      redirect_to group_path(@group), notice: "Update Success"
+    else
+      render :edit
     end
   end
 
