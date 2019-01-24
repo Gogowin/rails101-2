@@ -29,11 +29,14 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
 
     if @post.update(post_params)
-      redirect_to group_path(@group), notice: "Update Success"
+      redirect_to account_posts_path(@group), notice: "Update Success"
     else
       render :edit
     end
   end
+
+
+
 
   private
   def post_params
